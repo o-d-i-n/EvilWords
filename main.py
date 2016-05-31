@@ -15,7 +15,7 @@ from pyxhook import HookManager
 
 DATABASE = "data.csv"
 words_dictionary = {}
-
+index=0
 funnymessages = ["Are you about to type", "Lol, why are typing", "Bro, don't type", "Are you kidding me", "calm down,"]
 ignore_keys = ["Control_R", "Control_L", "Shift_L", "Shift_R", "Caps_Lock", "Alt_L", "Alt_R"]
 allowed_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -38,16 +38,30 @@ def StopService():
 
 def Handle_Keyboard_Event(event):
     global current_buffer
+    global index
     _key = event.Key
     if _key in ignore_keys:
         return
-    if allowed_characters.find(_key) != -1:
-        current_buffer = current_buffer + _key
+    if _key=="BackSpace" and current_buffer:
+        current_buffer=current_buffer[:(index - 1)] + current_buffer[index:]
+        index = index - 1
+    elif _key=="Left" and index!=0:
+        index = index - 1
+    elif _key=="Right" and len(current_buffer)!=index:
+        index = index + 1
+    elif _key=="End" or _key=="KP_End":
+        index=len(current_buffer)
+    elif ( _key=="Delete" or _key=="KP_Delete" ) and len(current_buffer)!=index:
+        current_buffer = current_buffer[:index] + current_buffer[( index + 1 ):]
+    elif allowed_characters.find(_key) != -1:
+        current_buffer = current_buffer[:index] + _key + current_buffer[index:]
+        index = index + 1
     else:
         current_buffer = current_buffer.lower()
         if current_buffer in words_dictionary:
-            sendmessage("{0} `{1}`?".format(funnymessages[randint(0,len(funnymessages))], current_buffer))
+            sendmessage("{0} `{1}`?".format(funnymessages[randint(0,len(funnymessages)-1)], current_buffer))
         current_buffer = ""
+        index=0
 
 #Keyboard Hookup settings
 hm = HookManager()
