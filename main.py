@@ -16,7 +16,6 @@ from pyxhook import HookManager
 DATABASE = "data.csv"
 words_dictionary = {}
 index=0
-funnymessages = ["Are you about to type", "Lol, why are typing", "Bro, don't type", "Are you kidding me", "calm down,"]
 ignore_keys = ["Control_R", "Control_L", "Shift_L", "Shift_R", "Caps_Lock", "Alt_L", "Alt_R"]
 allowed_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 current_buffer = ""
@@ -26,6 +25,9 @@ def sendmessage(message):
     return
 
 def StartService():
+    with open('funnymessages.txt','r') as myfile:
+        global funnymessages=myfile.read()
+    funnymessages=[x for x in funnymessages if x!='']            
     for key, val in csv.reader(open(DATABASE)):
         words_dictionary[key] = val
     hm.start()
