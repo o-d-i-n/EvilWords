@@ -26,7 +26,8 @@ def sendmessage(message):
 
 def StartService():
     with open('funnymessages.txt','r') as myfile:
-        global funnymessages=myfile.read()
+        global funnymessages
+        funnymessages = myfile.read()
     funnymessages=[x for x in funnymessages if x!='']            
     for key, val in csv.reader(open(DATABASE)):
         words_dictionary[key] = val
