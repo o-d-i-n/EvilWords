@@ -14,6 +14,7 @@ from datetime import datetime
 from pyxhook import HookManager
 
 DATABASE = "data.csv"
+FUNNY_FILE = "funnymessages.txt"
 words_dictionary = {}
 index=0
 ignore_keys = ["Control_R", "Control_L", "Shift_L", "Shift_R", "Caps_Lock", "Alt_L", "Alt_R"]
@@ -25,10 +26,9 @@ def sendmessage(message):
     return
 
 def StartService():
-    with open('funnymessages.txt','r') as myfile:
+    with open(FUNNY_FILE, "r") as myfile:
         global funnymessages
-        funnymessages = myfile.read()
-    funnymessages=[x for x in funnymessages if x!='']            
+        funnymessages = myfile.readlines()          
     for key, val in csv.reader(open(DATABASE)):
         words_dictionary[key] = val
     hm.start()
