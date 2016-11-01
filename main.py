@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Mar 20 14:15:25 2016
-
-@author: Aman Priyadarshi
-@handle: amaneureka
-"""
-
 import csv
 import time
 import subprocess
@@ -15,8 +8,9 @@ from pyxhook import HookManager
 
 DATABASE = "data.csv"
 FUNNY_FILE = "funnymessages.txt"
+
 words_dictionary = {}
-index=0
+index = 0
 ignore_keys = ["Control_R", "Control_L", "Shift_L", "Shift_R", "Caps_Lock", "Alt_L", "Alt_R"]
 allowed_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 current_buffer = ""
@@ -66,7 +60,7 @@ def Handle_Keyboard_Event(event):
         current_buffer = ""
         index=0
 
-#Keyboard Hookup settings
+# Keyboard Hookup settings
 hm = HookManager()
 hm.HookKeyboard()
 hm.KeyUp = Handle_Keyboard_Event
@@ -77,7 +71,7 @@ def WriteScreen(message):
 def Handle_User():
     global current_buffer
     cmd = str(raw_input()).strip().lower()
-    current_buffer = "" #empty up buffer
+    current_buffer = "" # empty up buffer
     if cmd == "close":
         StopService()
         return False
