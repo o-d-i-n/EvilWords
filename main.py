@@ -6,8 +6,9 @@ from random import randint
 from datetime import datetime
 from pyxhook import HookManager
 
-DATABASE = "data.csv"
-FUNNY_FILE = "funnymessages.txt"
+RESOURCES_PATH = "res/"
+DATABASE = RESOURCES_PATH + "data.csv"
+FUNNY_FILE = RESOURCES_PATH + "funnymessages.txt"
 
 words_dictionary = {}
 index = 0
