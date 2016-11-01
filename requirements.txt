@@ -1,1 +1,1 @@
-python-xlib
+python-xlib==0.17
